@@ -11,7 +11,7 @@
 ```
 ##### 2.再看`LiveData`中是如何添加这个观察者的：
 
-```
+```java
 	@MainThread
     public void observe(@NonNull LifecycleOwner owner, @NonNull Observer<? super T> observer) {
     			//1. 确保该方法只能在主线程中调用
