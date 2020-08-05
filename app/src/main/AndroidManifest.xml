@@ -20,6 +20,7 @@
         <activity android:name=".ui.canvas.ClipPathViewActivity" />
         <activity android:name=".jetpack.lifecycle.TestLifeCycleActivity" />
         <activity android:name=".kotlin.coroutine.first.TestCoroutineFirstAc" />
+        <activity android:name=".recyclerview.snapler.TestSnapHelperActivity" />
     </application>
 
 </manifest>

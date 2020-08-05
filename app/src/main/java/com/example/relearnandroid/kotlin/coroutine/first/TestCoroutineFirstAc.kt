@@ -5,8 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.example.relearnandroid.BaseActivity
 import com.example.relearnandroid.R
 import com.example.relearnandroid.kotlin.coroutine.awaitEnd
 import kotlinx.android.synthetic.main.test_coroutine_first.*
@@ -25,7 +25,7 @@ import kotlin.coroutines.resume
  * @Version 1.0
  *
  **/
-class TestCoroutineFirstAc : AppCompatActivity() {
+class TestCoroutineFirstAc : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,8 +1,8 @@
 package com.example.relearnandroid.jetpack.viewmodel
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.example.relearnandroid.BaseActivity
 
 /**
  *
@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider
  * @Version 1.0
  *
  **/
-class TestViewModelActivity : AppCompatActivity() {
+class TestViewModelActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
