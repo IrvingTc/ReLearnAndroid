@@ -88,10 +88,10 @@ class MySnapHelper : SnapHelper() {
             return RecyclerView.NO_POSITION
 
         //在松手之后,列表最多只能滚多一屏的item数
-        val deltaThreshold =
-            layoutManager.width / getVerticalHelper(layoutManager).getDecoratedMeasurement(
-                currentView
-            )
+        val deltaThreshold = 1
+//            layoutManager.width / getVerticalHelper(layoutManager).getDecoratedMeasurement(
+//                currentView
+//            )
         var hDeltaJump: Int
         if (layoutManager.canScrollVertically()) {
             hDeltaJump = estimateNextPositionDiffForFling(
@@ -104,7 +104,7 @@ class MySnapHelper : SnapHelper() {
             if (hDeltaJump < -deltaThreshold) {
                 hDeltaJump = -deltaThreshold
             }
-            if (vectorForEnd.x < 0) {
+            if (vectorForEnd.y < 0) {
                 hDeltaJump = -hDeltaJump
             }
         } else {

@@ -4,9 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.*
 import com.example.relearnandroid.BaseActivity
 import com.example.relearnandroid.R
 import com.example.relearnandroid.getScreenH
@@ -22,10 +23,13 @@ import kotlinx.android.synthetic.main.test_snap_helper_activity.*
  * @Version 1.0
  *
  **/
+
+private const val TAG = "TestSnapHelperActivity"
+
 class TestSnapHelperActivity : BaseActivity() {
 
     private var mHalfScreenHeight = 0
-
+    private lateinit var myLinearLayoutManager: MyLinearLayoutManager
     private val mItemDecoration by lazy {
         object : RecyclerView.ItemDecoration() {
             override fun getItemOffsets(
@@ -34,8 +38,7 @@ class TestSnapHelperActivity : BaseActivity() {
                 parent: RecyclerView,
                 state: RecyclerView.State
             ) {
-                super.getItemOffsets(outRect, view, parent, state)
-                outRect.set(0, 0, 0, mHalfScreenHeight - 250 * 3)
+                outRect.bottom = mHalfScreenHeight - 250 * 3
             }
         }
     }
@@ -45,17 +48,50 @@ class TestSnapHelperActivity : BaseActivity() {
         setContentView(R.layout.test_snap_helper_activity)
 
         mHalfScreenHeight = getScreenH() / 2
-
+        myLinearLayoutManager = MyLinearLayoutManager(this@TestSnapHelperActivity)
 
         test_snap_helper_rv.apply {
-            layoutManager = LinearLayoutManager(this@TestSnapHelperActivity)
+            layoutManager = myLinearLayoutManager
             adapter = SnapHelperRvAdapter(arrayOfNulls(100))
             addItemDecoration(mItemDecoration)
-        }
-//        PagerSnapHelper().attachToRecyclerView(test_snap_helper_rv)
-//        LinearSnapHelper().attachToRecyclerView(test_snap_helper_rv)
-        MySnapHelper().attachToRecyclerView(test_snap_helper_rv)
 
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                private var distanceY = 0
+                private var mDragged = false
+
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    when (newState) {
+                        SCROLL_STATE_IDLE -> {
+                            Log.d(TAG, "SCROLL_STATE_IDLE")
+                            if (mDragged) {
+                                mDragged = false
+                                (recyclerView as MyRecyclerView).scrollToCenter(
+                                    mHalfScreenHeight,
+                                    distanceY
+                                )
+                            }
+                            distanceY = 0
+                        }
+                        SCROLL_STATE_DRAGGING -> {
+                            Log.d(TAG, "SCROLL_STATE_DRAGGING")
+                            mDragged = true
+                        }
+                        SCROLL_STATE_SETTLING -> {
+                            Log.d(TAG, "SCROLL_STATE_SETTLING")
+                        }
+                    }
+                }
+
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if (dy == 0) return
+                    distanceY += dy
+                }
+            })
+        }
+
+//        MySnapHelper().attachToRecyclerView(test_snap_helper_rv)
     }
 
     companion object {
