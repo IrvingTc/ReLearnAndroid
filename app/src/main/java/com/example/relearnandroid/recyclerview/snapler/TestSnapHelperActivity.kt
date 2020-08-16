@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -50,6 +51,8 @@ class TestSnapHelperActivity : BaseActivity() {
         mHalfScreenHeight = getScreenH() / 2
         myLinearLayoutManager = MyLinearLayoutManager(this@TestSnapHelperActivity)
 
+        Handler()
+
         test_snap_helper_rv.apply {
             layoutManager = myLinearLayoutManager
             adapter = SnapHelperRvAdapter(arrayOfNulls(100))
@@ -63,15 +66,15 @@ class TestSnapHelperActivity : BaseActivity() {
                     super.onScrollStateChanged(recyclerView, newState)
                     when (newState) {
                         SCROLL_STATE_IDLE -> {
-                            Log.d(TAG, "SCROLL_STATE_IDLE")
-                            if (mDragged) {
-                                mDragged = false
-                                (recyclerView as MyRecyclerView).scrollToCenter(
-                                    mHalfScreenHeight,
-                                    distanceY
-                                )
-                            }
-                            distanceY = 0
+//                            Log.d(TAG, "SCROLL_STATE_IDLE")
+//                            if (mDragged) {
+//                                mDragged = false
+//                                (recyclerView as MyRecyclerView).scrollToCenter(
+//                                    mHalfScreenHeight,
+//                                    distanceY
+//                                )
+//                            }
+//                            distanceY = 0
                         }
                         SCROLL_STATE_DRAGGING -> {
                             Log.d(TAG, "SCROLL_STATE_DRAGGING")
@@ -91,7 +94,7 @@ class TestSnapHelperActivity : BaseActivity() {
             })
         }
 
-//        MySnapHelper().attachToRecyclerView(test_snap_helper_rv)
+        TestSnapHelper().attachToRecyclerView(test_snap_helper_rv)
     }
 
     companion object {

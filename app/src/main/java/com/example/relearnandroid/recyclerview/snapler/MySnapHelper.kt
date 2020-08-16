@@ -1,12 +1,15 @@
 package com.example.relearnandroid.recyclerview.snapler
 
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.*
 import androidx.recyclerview.widget.RecyclerView.SmoothScroller.ScrollVectorProvider
 import kotlin.math.abs
 import kotlin.math.ceil
 import kotlin.math.floor
+
+private const val TAG = "MySnapHelper"
 
 class MySnapHelper : SnapHelper() {
     private lateinit var mVerticalHelper: OrientationHelper
@@ -32,6 +35,7 @@ class MySnapHelper : SnapHelper() {
     }
 
     private fun distanceToStart(targetView: View, helper: OrientationHelper): Int {
+        // 返回
         return helper.getDecoratedStart(targetView) - helper.startAfterPadding
     }
 
@@ -62,6 +66,9 @@ class MySnapHelper : SnapHelper() {
         }
     }
 
+    /**
+     * for fling
+     */
     override fun findTargetSnapPosition(
         layoutManager: RecyclerView.LayoutManager,
         velocityX: Int,
@@ -140,21 +147,35 @@ class MySnapHelper : SnapHelper() {
             if (layoutManager.findLastCompletelyVisibleItemPosition() == layoutManager.getItemCount() - 1) {
                 return null
             }
+            //第一个可见的child view
             val firstChildView =
                 layoutManager.findViewByPosition(firstChildPosition)
-            if (helper!!.getDecoratedEnd(firstChildView) >= helper.getDecoratedMeasurement(
+            Log.d(
+                TAG,
+                "end: ${helper!!.getDecoratedEnd(firstChildView)} totalHeight: ${helper.getDecoratedMeasurement(
                     firstChildView
-                ) / 2 && helper.getDecoratedEnd(firstChildView) > 0
-            ) {
-                firstChildView
-            } else {
-                layoutManager.findViewByPosition(firstChildPosition + 1)
-            }
+                )}"
+            )
+//            if (helper!!.getDecoratedEnd(firstChildView) >= helper.getDecoratedMeasurement(
+//                    firstChildView
+//                ) / 2 && helper.getDecoratedEnd(firstChildView) > 0
+//            ) {
+//                //当第一个可见的child view的bottom(包括itemDecoration的bottom以及marginEnd)大于等于view的
+//                // 一半高度时(包括itemDecoration和margin)，并且bottom大于0
+//                //这个bottom是当前view的底部距父布局顶部的距离
+//                firstChildView
+//            } else {
+//                layoutManager.findViewByPosition(firstChildPosition + 1)
+//            }
+            return firstChildView
         } else {
             null
         }
     }
 
+    /**
+     * for fling
+     */
     private fun estimateNextPositionDiffForFling(
         layoutManager: RecyclerView.LayoutManager,
         helper: OrientationHelper, velocityX: Int, velocityY: Int
@@ -172,6 +193,9 @@ class MySnapHelper : SnapHelper() {
         }
     }
 
+    /**
+     * for fling
+     */
     private fun computeDistancePerChild(
         layoutManager: RecyclerView.LayoutManager,
         helper: OrientationHelper
