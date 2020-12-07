@@ -21,6 +21,7 @@
         <activity android:name=".jetpack.lifecycle.TestLifeCycleActivity" />
         <activity android:name=".kotlin.coroutine.first.TestCoroutineFirstAc" />
         <activity android:name=".recyclerview.snapler.TestSnapHelperActivity" />
+        <activity android:name=".coor.TestCoor" />
     </application>
 
 </manifest>

@@ -1,9 +1,9 @@
 package com.example.relearnandroid
 
 import android.os.Bundle
+import com.example.relearnandroid.coor.TestCoor
 import com.example.relearnandroid.jetpack.lifecycle.TestLifeCycleActivity
 import com.example.relearnandroid.kotlin.coroutine.first.TestCoroutineFirstAc
-import com.example.relearnandroid.recyclerview.snapler.TestSnapHelperActivity
 import com.example.relearnandroid.ui.canvas.ClipPathViewActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -26,7 +26,8 @@ class MainActivity : BaseActivity() {
         }
 
         test_snap_helper_ac_btn.setOnClickListener {
-            TestSnapHelperActivity.startTestSnapHelperActivity(this)
+//            TestSnapHelperActivity.startTestSnapHelperActivity(this)
+            TestCoor.startTestCoorActivity(this)
         }
     }
 
